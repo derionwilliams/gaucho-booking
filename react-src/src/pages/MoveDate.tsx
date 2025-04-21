@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import useLocalStorage from "use-local-storage";
 
+//Todo: change the logic for the initalized date object in storage to use availability from the dashboard
+
 type CustomDayProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     day: {
         date: Date;
