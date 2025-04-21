@@ -52,7 +52,7 @@ export const formSchema = z.object({
     routes: z.array(routeSchema).nonempty("At least one address is required"),
 });
 
-export type FormData = z.infer<typeof formSchema>;
+export type RouteFormData = z.infer<typeof formSchema>;
 
 export type RouteProps = {
     form: UseFormReturn<FormData>;
