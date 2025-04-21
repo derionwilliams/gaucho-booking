@@ -1,3 +1,4 @@
+import useLocalStorage from "use-local-storage";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -9,6 +10,8 @@ const contactSchema = z.object({
 });
 
 function Payment() {
+    // const [bookingData, setBookingData] = useLocalStorage("bookingData", "");
+
     return (
         <div>
             <h1>Complete and reserve your crew. Fully refundable.</h1>

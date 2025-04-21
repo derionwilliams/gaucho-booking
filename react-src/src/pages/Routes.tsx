@@ -13,92 +13,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useCallback, useEffect } from "react";
-import { useFieldArray, useForm, UseFormReturn } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import useLocalStorage from "use-local-storage";
-import { z } from "zod";
+import {
+    RouteProps,
+    propertyTypeEnum,
+    bedroomsEnum,
+    sqftEnum,
+    garageEnum,
+    storiesEnum,
+    RouteOptionProps,
+    newRoute,
+    formSchema,
+    FormData,
+} from "@/schemas/routeForm.schema";
 
 //TODO:
 //  - append an empty route when adding a new one
 //  - address not changing if you delete a stop before it; requires page refresh to work
-
-const PROPERTY_TYPES = [
-    "",
-    "Home/Townhouse",
-    "Apartment",
-    "Highrise",
-    "Office",
-    "Storage",
-] as const;
-
-const propertyTypeEnum = z.enum(PROPERTY_TYPES);
-
-const NUM_BEDROOMS = ["", "1", "2", "3", "4", "5"] as const;
-const bedroomsEnum = z.enum(NUM_BEDROOMS);
-
-const SQFT_RANGES = [
-    "",
-    "0-1000",
-    "1000-1500",
-    "1500-2000",
-    "2000-3000",
-    "3000+",
-] as const;
-const sqftEnum = z.enum(SQFT_RANGES);
-
-const GARAGE_SIZES = ["", "none", "1 car", "2 car", "3+ car"] as const;
-const garageEnum = z.enum(GARAGE_SIZES);
-
-const NUM_STORIES = ["", "1", "2", "3", "4+"] as const;
-const storiesEnum = z.enum(NUM_STORIES);
-
-const routeSchema = z.object({
-    address: z
-        .string()
-        .min(2, "Address must be at least 2 charactes")
-        .max(50, "Address cannot exceed 50 characters")
-        .refine((v) => v !== "", { message: "Please input an address" }),
-    unit: z
-        .string()
-        .max(10, "Unit number cannon exceed 10 characters")
-        .optional(),
-    "property-type": propertyTypeEnum,
-    bedrooms: bedroomsEnum,
-    sqft: sqftEnum,
-    garage: garageEnum,
-    stories: storiesEnum,
-});
-
-const formSchema = z.object({
-    routes: z.array(routeSchema).nonempty("At least one address is required"),
-});
-
-type FormData = z.infer<typeof formSchema>;
-
-type RouteProps = {
-    form: UseFormReturn<FormData>;
-    index: number;
-};
-
-type RouteOptionProps = {
-    index: number;
-    numRoutes: number;
-    swap: (from: number, to: number) => void;
-    remove: (index?: number | number[]) => void;
-};
-
-type RouteInput = z.input<typeof routeSchema>;
-
-const newRoute: NewRoute = {
-    address: "",
-    unit: "",
-    "property-type": "Home/Townhouse",
-    bedrooms: "1",
-    sqft: "0-1000",
-    garage: "none",
-    stories: "1",
-} satisfies RouteInput;
-
-type NewRoute = z.infer<typeof routeSchema>;
 
 function Route({ form, index }: RouteProps) {
     const numRoutes = form.getValues("routes").length - 1;

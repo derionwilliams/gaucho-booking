@@ -1,7 +1,6 @@
 import useLocalStorage from "use-local-storage";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
@@ -14,29 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@radix-ui/react-checkbox";
 import { Button } from "@/components/ui/button";
+import {
+    DetailsData,
+    detailsSchema,
+    belongingsEnum,
+    SPECIALTY_ITEMS,
+} from "@/schemas/movingDetails.schema";
 
-const BELONGINGS_GOING = [
-    "Everything's going",
-    "Most of my items",
-    "About half of my belongings",
-    "Just a few items",
-] as const;
-const belongingsEnum = z.enum(BELONGINGS_GOING);
-const SPECIALTY_ITEMS = [
-    "",
-    "Antiques",
-    "Gun Safes",
-    "Pianos",
-    "Pool Tables",
-] as const;
-const specialtyItemsEnum = z.enum(SPECIALTY_ITEMS);
-const specialtyMultiSelect = z.array(specialtyItemsEnum);
-const detailsSchema = z.object({
-    "belongings-going": belongingsEnum,
-    "specialty-items": specialtyMultiSelect,
-});
-
-type DetailsData = z.infer<typeof detailsSchema>;
 function MovingDetails() {
     const [data, setData] = useLocalStorage<DetailsData>("detailsData", {
         "belongings-going": "Everything's going",
@@ -60,7 +43,7 @@ function MovingDetails() {
 
     function nextPage() {
         // Todo: Check to see if this is a larger or smaller job to suggest a efficency or supersized crew (then do the packing)
-        // https://www.3menmovers.com/booking/supersize/
+        // https://www.3mm.com/booking/supersize/
         //
         // For example, choosing a 3 bedroom home that is 1500-2000 sqft, has a 2 car garage, is 2 stories and everything is going
         //  will allow for the option to supersize your crew for a higher hourly rate.

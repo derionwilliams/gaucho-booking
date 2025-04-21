@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -14,46 +13,33 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@radix-ui/react-checkbox";
 import { useEffect } from "react";
 import useLocalStorage from "use-local-storage";
-
-const formSchema = z.object({
-    contactInformation: z.object({
-        "full-name": z.string().min(2).max(50),
-        email: z.string().min(2).max(50),
-        "phone-number": z.string().min(2).max(50),
-    }),
-    "moving-from": z.string().min(2).max(50),
-    "moving-to": z.string().min(2).max(50),
-    consent: z.boolean(),
-});
+import { contactFormSchema, ContactForm } from "@/schemas/contactForm.schema";
 
 function BookNow() {
-    const [data, setData] = useLocalStorage<z.infer<typeof formSchema>>(
-        "contactInfo",
-        {
-            contactInformation: {
-                "full-name": "",
-                email: "",
-                "phone-number": "",
-            },
-            "moving-from": "",
-            "moving-to": "",
-            consent: false,
+    const [data, setData] = useLocalStorage<ContactForm>("contactInfo", {
+        contactInformation: {
+            "full-name": "",
+            email: "",
+            "phone-number": "",
         },
-    );
+        "moving-from": "",
+        "moving-to": "",
+        consent: false,
+    });
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<ContactForm>({
+        resolver: zodResolver(contactFormSchema),
         defaultValues: data,
     });
 
     useEffect(() => {
         const subscription = form.watch((values) => {
-            setData(values as z.infer<typeof formSchema>);
+            setData(values as ContactForm);
         });
         return () => subscription.unsubscribe();
     }, [form, setData]);
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: ContactForm) {
         console.log(values);
         window.location.assign("/booking/move-date");
     }
