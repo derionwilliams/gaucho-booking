@@ -18,7 +18,8 @@ import { contactFormSchema, ContactForm } from "@/schemas/contactForm.schema";
 function BookNow() {
     const [data, setData] = useLocalStorage<ContactForm>("contactInfo", {
         contactInformation: {
-            "full-name": "",
+            "first-name": "",
+            "last-name": "",
             email: "",
             "phone-number": "",
         },
@@ -78,12 +79,25 @@ function BookNow() {
                         />
                         <FormField
                             control={form.control}
-                            name="contactInformation.full-name"
+                            name="contactInformation.first-name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Full Name</FormLabel>
+                                    <FormLabel>First Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your name" {...field} />
+                                        <Input placeholder="Enter your first name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="contactInformation.last-name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Last Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter your last name" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

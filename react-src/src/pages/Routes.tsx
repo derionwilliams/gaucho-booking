@@ -279,7 +279,8 @@ function Routes() {
     "contactInfo",
     {
       contactInformation: {
-        "full-name": "",
+        "first-name": "",
+        "last-name": "",
         "phone-number": "",
         email: "",
       },
