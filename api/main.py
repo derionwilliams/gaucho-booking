@@ -3,10 +3,9 @@ import os
 import psycopg
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
-
-app = FastAPI()
 
 db_host = os.getenv("DB_HOST", "")
 db_port = os.getenv("DB_PORT", "")
@@ -15,6 +14,17 @@ db_password = os.getenv("DB_PASSWORD", "")
 db_database = os.getenv("DB_DATABASE", "")
 db_sslmode = os.getenv("DB_SSLMODE", "")
 
+app = FastAPI()
+
+origins = ["http://localhost:5173"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 connection = psycopg.connect(
     f"user={db_user} password={db_password} host={db_host} port={db_port} sslmode={db_sslmode} dbname={db_database}"
