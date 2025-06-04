@@ -1,11 +1,10 @@
-import "./App.css";
-import BookNow from "./pages/BookNow";
-import MoveDate from "./pages/MoveDate";
-import Routes from "./pages/Routes";
-import MovingDetails from "./pages/MovingDetails";
-import Payment from "./pages/Payment";
-import Supersize from "./pages/Supersize";
-import Efficiency from "./pages/Efficiency";
+import BookNow from "./src/pages/BookNow";
+import MoveDate from "./src/pages/MoveDate";
+import Routes from "./src/pages/Routes";
+import MovingDetails from "./src/pages/MovingDetails";
+import Payment from "./src/pages/Payment";
+import Supersize from "./src/pages/Supersize";
+import Efficiency from "./src/pages/Efficiency";
 
 function App() {
     const path = window.location.pathname;

@@ -9,7 +9,9 @@ export const contactFormSchema = z.object({
     }),
     "moving-from": z.string().min(2).max(50),
     "moving-to": z.string().min(2).max(50),
-    consent: z.boolean(),
+    consent: z.boolean().refine((val) => val === true, {
+        message: "You must agree to the terms to continue",
+    }),
     "crew-notes": z.string().max(2200).optional(),
 });
 

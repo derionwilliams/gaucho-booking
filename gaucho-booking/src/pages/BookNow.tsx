@@ -10,10 +10,13 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect } from "react";
 import useLocalStorage from "use-local-storage";
-import { contactFormSchema, ContactForm } from "@/schemas/contactForm.schema";
+import {
+    contactFormSchema,
+    type ContactForm,
+} from "@/schemas/contactForm.schema";
 
 function BookNow() {
     const [data, setData] = useLocalStorage<ContactForm>("contactInfo", {
@@ -134,19 +137,29 @@ function BookNow() {
                             control={form.control}
                             name="consent"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Accept terms and conditions</FormLabel>
+                                <FormItem className=" flex ">
                                     <FormControl>
                                         <Checkbox
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <div className="block">
+                                        <FormLabel className=" block">
+                                            I agree to texts and calls under <a href="#" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">terms</a> and{" "}
+                                            <a href="#" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">privacy</a>.
+                                        </FormLabel>
+                                        <p className=" text-sm">
+                                            We don't sell your data to anyone for any purpose.
+                                        </p>
+                                    </div>
+                                    <FormMessage className=" px-2" />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Start Booking</Button>
+                        <Button type="submit" variant={"default"}>
+                            Start Booking
+                        </Button>
                     </form>
                 </Form>
             </div>

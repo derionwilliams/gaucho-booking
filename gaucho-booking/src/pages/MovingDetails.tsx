@@ -11,10 +11,10 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
-    DetailsData,
+    type DetailsData,
     detailsSchema,
     belongingsEnum,
     SPECIALTY_ITEMS,
@@ -58,14 +58,18 @@ function MovingDetails() {
                     <FormField
                         control={form.control}
                         name="belongings-going"
-                        render={() => (
-                            <div>
+                        render={({ field }) => (
+                            <div className="py-4">
                                 <h2>
                                     How much of your belongings are you moving? This does not
                                     impact pricing
                                 </h2>
                                 <div>
-                                    <RadioGroup className="flex flex-row">
+                                    <RadioGroup
+                                        className="flex flex-row"
+                                        defaultValue={field.value}
+                                        onValueChange={field.onChange}
+                                    >
                                         {belongingsEnum.options.map((opt) => (
                                             <div key={opt}>
                                                 <RadioGroupItem value={opt} id={opt} />
@@ -82,11 +86,11 @@ function MovingDetails() {
                         control={form.control}
                         name="specialty-items"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className=" py-4">
                                 <FormLabel>Any specialty items?</FormLabel>
                                 <div className="flex flex-row">
                                     {SPECIALTY_ITEMS.filter((opt) => opt).map((opt) => (
-                                        <div key={opt} className="flex items-center">
+                                        <div key={opt} className="flex items-center px-2">
                                             <FormControl>
                                                 <Checkbox
                                                     checked={field.value.includes(opt)}
