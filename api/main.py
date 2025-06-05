@@ -16,7 +16,7 @@ db_sslmode = os.getenv("DB_SSLMODE", "")
 
 app = FastAPI()
 
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173", "https://summitmovinghouston.com"]
 
 app.add_middleware(
     CORSMiddleware,
