@@ -48,6 +48,21 @@ function BookNow() {
         window.location.assign("/booking/move-date");
     }
 
+    async function testServer() {
+        try {
+            const res = await fetch(
+                "https://summit-booking-9h3xy.ondigitalocean.app/list-jobs",
+            );
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            const data = await res.json();
+            console.log("JSON from /list-jobs:", data);
+        } catch (err) {
+            console.error("Fetch error:", err);
+        }
+    }
+
     return (
         <div>
             <div>
@@ -146,8 +161,21 @@ function BookNow() {
                                     </FormControl>
                                     <div className="block">
                                         <FormLabel className=" block">
-                                            I agree to texts and calls under <a href="#" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">terms</a> and{" "}
-                                            <a href="#" className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">privacy</a>.
+                                            I agree to texts and calls under{" "}
+                                            <a
+                                                href="#"
+                                                className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                                            >
+                                                terms
+                                            </a>{" "}
+                                            and{" "}
+                                            <a
+                                                href="#"
+                                                className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                                            >
+                                                privacy
+                                            </a>
+                                            .
                                         </FormLabel>
                                         <p className=" text-sm">
                                             We don't sell your data to anyone for any purpose.
@@ -167,6 +195,9 @@ function BookNow() {
                 <h2>Book Your Move Online</h2>
                 <p>We know you’re busy, so we make it easy to book your move online.</p>
             </div>
+            <Button type="button" variant={"destructive"} onClick={testServer}>
+                Server Test!
+            </Button>
         </div>
     );
 }

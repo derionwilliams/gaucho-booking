@@ -36,6 +36,7 @@ function MoveDate() {
     });
 
     const [blockedDates, setBlockedDates] = useState<Date[]>([]);
+    setBlockedDates([]);
 
     const setDate: SelectSingleEventHandler = (date) => {
         if (!date) return;
